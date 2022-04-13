@@ -1,2 +1,2 @@
-# movie-rentals-web-app
+# Movie Rentals
 A web application for managing movie rentals
