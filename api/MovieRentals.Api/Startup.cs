@@ -30,7 +30,7 @@ namespace MovieRentals.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieRentals.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie Rentals", Version = "v1" });
             });
         }
 
@@ -41,7 +41,7 @@ namespace MovieRentals.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieRentals.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Rentals"));
             }
 
             app.UseHttpsRedirection();
