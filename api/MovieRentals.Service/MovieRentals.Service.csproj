@@ -1,16 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MovieRentals.Domain\MovieRentals.Domain.csproj" />
-    <ProjectReference Include="..\MovieRentals.Service\MovieRentals.Service.csproj" />
     <ProjectReference Include="..\MovieRentals.Infra\MovieRentals.Infra.csproj" />
   </ItemGroup>
 
