@@ -14,6 +14,6 @@ namespace MovieRentals.Api.Models.Request
     public string CPF { get; set; }
 
     [Required]
-    public DateTime DataNascimento { get; set; }
+    public Nullable<DateTime> DataNascimento { get; set; }
   }
 }

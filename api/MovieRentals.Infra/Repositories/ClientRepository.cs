@@ -1,4 +1,5 @@
 using System.Data;
+using System.Linq;
 using Dapper;
 using MovieRentals.Domain;
 using MovieRentals.Infra.Contracts;
@@ -8,41 +9,61 @@ namespace MovieRentals.Infra.Repositories
   public class ClientRepository : IClientRepository
   {
     private readonly IDbConnection _db;
-    public ClientRepository(IDbConnection db)
-    {
-      _db = db;
-    }
-    public Client Create(Client client)
-    {
-      throw new System.NotImplementedException();
-    }
+    public ClientRepository(IDbConnection db) => _db = db;
 
-    public void Delete(int id)
+    public Client[] GetAll()
     {
-      throw new System.NotImplementedException();
+      return _db.Query<Client>(@"
+        SELECT
+          id,
+          nome,
+          CPF,
+          dataNascimento
+          FROM cliente")?.ToArray();
     }
 
     public Client Get(int id)
     {
-      return _db.QueryFirstOrDefault<Client>(
-        @"SELECT 
-              id,
-              nome,
-              CPF,
-              dataNascimento
-              FROM cliente
-              where id = @Id",
-         new { Id = id });
+      return _db.QueryFirstOrDefault<Client>(@"
+        SELECT
+          id,
+          nome,
+          CPF,
+          dataNascimento
+        FROM cliente
+        WHERE id = @Id", new { Id = id });
     }
 
-    public Client[] GetAll()
+    public Client Create(Client client)
     {
-      throw new System.NotImplementedException();
+      int id = _db.QuerySingle<int>(@"
+      INSERT INTO cliente 
+        (Nome, CPF, dataNascimento)
+        VALUES 
+        (@Nome, @CPF, @DataNascimento);
+      
+      SELECT LAST_INSERT_ID();", client);
+
+      client.Id = id;
+
+      return client;
     }
 
-    public Client Update(Client client)
+    public Client Update(int id, Client client)
     {
-      throw new System.NotImplementedException();
+      client.Id = id;
+
+      _db.Query(@"
+        UPDATE cliente set 
+          nome = @Nome,
+          CPF = @CPF,
+          dataNascimento = @DataNascimento
+        WHERE id = @Id", new { client });
+
+      return client;
     }
+
+    public void Delete(int id) =>
+      _db.Query(@"DELETE FROM cliente WHERE Id = @Id", new { Id = id });
   }
 }

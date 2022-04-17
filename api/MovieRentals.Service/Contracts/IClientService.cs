@@ -7,7 +7,7 @@ namespace MovieRentals.Service.Contracts
     Client[] GetAll();
     Client Get(int id);
     Client Create(Client client);
-    Client Update(Client client);
+    Client Update(int id, Client client);
     void Delete(int id);
   }
 }

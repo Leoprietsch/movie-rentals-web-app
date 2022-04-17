@@ -7,18 +7,15 @@ namespace MovieRentals.Service.Services
   public class ClientService : IClientService
   {
     private readonly IClientRepository _clientRepository;
+
     public ClientService(IClientRepository clientRepository)
     {
       _clientRepository = clientRepository;
     }
-    public Client Create(Client client)
-    {
-      throw new System.NotImplementedException();
-    }
 
-    public void Delete(int id)
+    public Client[] GetAll()
     {
-      throw new System.NotImplementedException();
+      return _clientRepository.GetAll();
     }
 
     public Client Get(int id)
@@ -26,14 +23,19 @@ namespace MovieRentals.Service.Services
       return _clientRepository.Get(id);
     }
 
-    public Client[] GetAll()
+    public Client Create(Client client)
     {
-      throw new System.NotImplementedException();
+      return _clientRepository.Create(client);
     }
 
-    public Client Update(Client client)
+    public Client Update(int id, Client client)
     {
-      throw new System.NotImplementedException();
+      return _clientRepository.Update(id, client);
+    }
+
+    public void Delete(int id)
+    {
+      _clientRepository.Delete(id);
     }
   }
 }
