@@ -53,12 +53,14 @@ namespace MovieRentals.Infra.Repositories
     {
       client.Id = id;
 
-      _db.Query(@"
+      int affectedRows = _db.Execute(@"
         UPDATE cliente set 
           nome = @Nome,
           CPF = @CPF,
           dataNascimento = @DataNascimento
-        WHERE id = @Id", new { client });
+        WHERE id = @Id", client);
+
+      if (affectedRows == 0) return null;
 
       return client;
     }
