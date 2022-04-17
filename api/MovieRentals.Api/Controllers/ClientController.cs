@@ -9,12 +9,12 @@ namespace MovieRentals.Api.Controllers
 {
   [ApiController]
   [Route("[controller]")]
-  public class ClienteController : ControllerBase
+  public class ClientController : ControllerBase
   {
-    private readonly ILogger<ClienteController> _logger;
+    private readonly ILogger<ClientController> _logger;
     private readonly IClientService _clientService;
 
-    public ClienteController(ILogger<ClienteController> logger, IClientService clientService)
+    public ClientController(ILogger<ClientController> logger, IClientService clientService)
     {
       _logger = logger;
       _clientService = clientService;
@@ -23,7 +23,7 @@ namespace MovieRentals.Api.Controllers
     [HttpGet]
     public ActionResult<Client[]> GetAll()
     {
-      return Ok(new Client[0]);
+      return Ok(_clientService.GetAll());
     }
 
     [HttpGet("{id}")]
@@ -33,20 +33,21 @@ namespace MovieRentals.Api.Controllers
     }
 
     [HttpPost]
-    public ActionResult<Client> Post([FromBody] ClientCommandModel client)
+    public ActionResult<Client> Post([FromBody] ClientCommandModel clientCommandModel)
     {
-      return Ok();
+      return Ok(_clientService.Create(new Client(clientCommandModel.Nome, clientCommandModel.CPF, clientCommandModel.DataNascimento.Value)));
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Client> Put(int id, [FromBody] ClientCommandModel client)
+    public ActionResult<Client> Put(int id, [FromBody] ClientCommandModel clientCommandModel)
     {
-      return Ok();
+      return Ok(_clientService.Update(id, new Client(clientCommandModel.Nome, clientCommandModel.CPF, clientCommandModel.DataNascimento.Value)));
     }
 
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
+      _clientService.Delete(id);
       return NoContent();
     }
   }
