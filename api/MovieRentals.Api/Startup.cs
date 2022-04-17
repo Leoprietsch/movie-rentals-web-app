@@ -33,6 +33,7 @@ namespace MovieRentals.Api
       services.AddTransient<IRentService, RentService>();
       services.AddTransient<IRentRepository, RentRepository>();
 
+      services.AddTransient<IMovieService, MovieService>();
       services.AddTransient<IMovieRepository, MovieRepository>();
 
       services.AddControllers();
