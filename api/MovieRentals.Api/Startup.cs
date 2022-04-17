@@ -30,6 +30,11 @@ namespace MovieRentals.Api
       services.AddTransient<IClientService, ClientService>();
       services.AddTransient<IClientRepository, ClientRepository>();
 
+      services.AddTransient<IRentService, RentService>();
+      services.AddTransient<IRentRepository, RentRepository>();
+
+      services.AddTransient<IMovieRepository, MovieRepository>();
+
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {
