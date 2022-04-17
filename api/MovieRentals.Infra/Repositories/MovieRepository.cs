@@ -19,7 +19,7 @@ namespace MovieRentals.Infra.Repositories
           titulo,
           classificacaoIndicativa,
           lancamento
-          FROM filme")?.ToArray();
+        FROM filme")?.ToArray();
     }
 
     public Movie Get(int id)
@@ -36,15 +36,12 @@ namespace MovieRentals.Infra.Repositories
 
     public Movie Create(Movie movie)
     {
-      int id = _db.QuerySingle<int>(@"
-      INSERT INTO filme 
-        (Id, Titulo, ClassificacaoIndicativa, Lancamento)
-        VALUES 
-        (@Id, @Titulo, @ClassificacaoIndicativa, @Lancamento);
-      
-      SELECT LAST_INSERT_ID();", movie);
+      _db.QuerySingle<int>(@"
+        INSERT INTO filme 
+          (Id, Titulo, ClassificacaoIndicativa, Lancamento)
+          VALUES 
+          (@Id, @Titulo, @ClassificacaoIndicativa, @Lancamento);", movie);
 
-      movie.Id = id;
 
       return movie;
     }

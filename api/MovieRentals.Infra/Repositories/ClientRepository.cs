@@ -19,7 +19,7 @@ namespace MovieRentals.Infra.Repositories
           nome,
           CPF,
           dataNascimento
-          FROM cliente")?.ToArray();
+        FROM cliente")?.ToArray();
     }
 
     public Client Get(int id)
@@ -37,12 +37,12 @@ namespace MovieRentals.Infra.Repositories
     public Client Create(Client client)
     {
       int id = _db.QuerySingle<int>(@"
-      INSERT INTO cliente 
-        (Nome, CPF, dataNascimento)
-        VALUES 
-        (@Nome, @CPF, @DataNascimento);
-      
-      SELECT LAST_INSERT_ID();", client);
+        INSERT INTO cliente 
+          (Nome, CPF, dataNascimento)
+          VALUES 
+          (@Nome, @CPF, @DataNascimento);
+        
+        SELECT LAST_INSERT_ID();", client);
 
       client.Id = id;
 
