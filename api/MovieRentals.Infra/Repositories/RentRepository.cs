@@ -10,7 +10,8 @@ namespace MovieRentals.Infra.Repositories
   public class RentRepository : IRentRepository
   {
     private readonly IDbConnection _db;
-    public RentRepository(IDbConnection db) => _db = db;
+    public RentRepository(IDbConnection db)
+      => _db = db;
 
     public Rent[] GetAll()
     {
@@ -103,8 +104,8 @@ namespace MovieRentals.Infra.Repositories
       return null;
     }
 
-    public void Delete(int id) =>
-      _db.Query(@"DELETE FROM locacao WHERE Id = @Id", new { Id = id });
+    public void Delete(int id)
+      => _db.Query(@"DELETE FROM locacao WHERE Id = @Id", new { Id = id });
 
     public Rent Return(int id)
     {

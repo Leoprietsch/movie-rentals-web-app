@@ -18,14 +18,10 @@ namespace MovieRentals.Service.Services
     }
 
     public Rent[] GetAll()
-    {
-      return _rentRepository.GetAll();
-    }
+      => _rentRepository.GetAll();
 
     public Rent Get(int id)
-    {
-      return _rentRepository.Get(id);
-    }
+      => _rentRepository.Get(id);
 
     public Rent Create(int idClient, int idMovie)
     {
@@ -50,14 +46,9 @@ namespace MovieRentals.Service.Services
     }
 
     public void Delete(int id)
-    {
-      _rentRepository.Delete(id);
-    }
+      => _rentRepository.Delete(id);
 
     public Rent Return(int id)
-    {
-      return _rentRepository.Return(id);
-
-    }
+      => _rentRepository.Return(id);
   }
 }

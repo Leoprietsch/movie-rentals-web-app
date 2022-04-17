@@ -10,38 +10,26 @@ namespace MovieRentals.Api.Controllers
   [Route("[controller]")]
   public class RentController : ControllerBase
   {
-    private readonly ILogger<RentController> _logger;
     private readonly IRentService _rentService;
 
-    public RentController(ILogger<RentController> logger, IRentService rentService)
-    {
-      _logger = logger;
-      _rentService = rentService;
-    }
+    public RentController(IRentService rentService)
+      => _rentService = rentService;
 
     [HttpGet]
     public ActionResult<Rent[]> GetAll()
-    {
-      return Ok(_rentService.GetAll());
-    }
+      => Ok(_rentService.GetAll());
 
     [HttpGet("{id}")]
     public ActionResult<Rent> Get(int id)
-    {
-      return Ok(_rentService.Get(id));
-    }
+      => Ok(_rentService.Get(id));
 
     [HttpPost]
     public ActionResult<Rent> Post([FromBody] RentCommandModel rentCommandModel)
-    {
-      return Ok(_rentService.Create(rentCommandModel.IdClient, rentCommandModel.IdMovie));
-    }
+      => Ok(_rentService.Create(rentCommandModel.IdClient, rentCommandModel.IdMovie));
 
     [HttpPut("{id}")]
     public ActionResult<Rent> Put(int id, [FromBody] RentCommandModel rentCommandModel)
-    {
-      return Ok(_rentService.Update(id, rentCommandModel.IdClient, rentCommandModel.IdMovie));
-    }
+      => Ok(_rentService.Update(id, rentCommandModel.IdClient, rentCommandModel.IdMovie));
 
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
@@ -52,8 +40,6 @@ namespace MovieRentals.Api.Controllers
 
     [HttpPut("{id}/return")]
     public ActionResult Return(int id)
-    {
-      return Ok(_rentService.Return(id));
-    }
+      => Ok(_rentService.Return(id));
   }
 }

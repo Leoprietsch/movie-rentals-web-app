@@ -9,22 +9,20 @@ namespace MovieRentals.Infra.Repositories
   public class ClientRepository : IClientRepository
   {
     private readonly IDbConnection _db;
-    public ClientRepository(IDbConnection db) => _db = db;
+    public ClientRepository(IDbConnection db)
+      => _db = db;
 
     public Client[] GetAll()
-    {
-      return _db.Query<Client>(@"
+      => _db.Query<Client>(@"
         SELECT
           id,
           nome,
           CPF,
           dataNascimento
         FROM cliente")?.ToArray();
-    }
 
     public Client Get(int id)
-    {
-      return _db.QueryFirstOrDefault<Client>(@"
+      => _db.QueryFirstOrDefault<Client>(@"
         SELECT
           id,
           nome,
@@ -32,7 +30,6 @@ namespace MovieRentals.Infra.Repositories
           dataNascimento
         FROM cliente
         WHERE id = @Id", new { Id = id });
-    }
 
     public Client Create(Client client)
     {
@@ -65,7 +62,7 @@ namespace MovieRentals.Infra.Repositories
       return client;
     }
 
-    public void Delete(int id) =>
-      _db.Query(@"DELETE FROM cliente WHERE Id = @Id", new { Id = id });
+    public void Delete(int id)
+      => _db.Query(@"DELETE FROM cliente WHERE Id = @Id", new { Id = id });
   }
 }

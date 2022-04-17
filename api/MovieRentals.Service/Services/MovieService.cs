@@ -11,6 +11,7 @@ namespace MovieRentals.Service.Services
     public MovieService(IMovieRepository movieRepository)
       => _movieRepository = movieRepository;
 
-    public Movie[] GetAll() => _movieRepository.GetAll();
+    public Movie[] GetAll()
+      => _movieRepository.GetAll();
   }
 }
