@@ -5,20 +5,21 @@ import { UserAddOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Cliente from "../../entities/Cliente";
 import { useRouter } from "next/router";
+import { getAll } from "../../apiClients/clientesClient";
 
 function Clientes() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    setClientes([
-      {
-        id: 1,
-        nome: "Leonardo Oliveira",
-        cpf: "85953547072",
-        dataNascimento: new Date(),
-      },
-    ]);
+    getAll()
+      .then((response: any) => {
+        setClientes(response.data);
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
   }, []);
 
   const colunas: ColumnsType<Cliente> = [
@@ -37,7 +38,8 @@ function Clientes() {
       dataIndex: "dataNascimento",
       key: "dataNascimento",
       render: (value, cliente: Cliente) => {
-        return cliente?.dataNascimento?.toLocaleString("pt-br", {
+        console.log(value);
+        return new Date(cliente?.dataNascimento).toLocaleString("pt-br", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
@@ -51,8 +53,8 @@ function Clientes() {
       render: (value, cliente: Cliente) => {
         return (
           <Space size="middle">
-            <a href={`/clientes/editar/${cliente.id}`}>Editar</a>
-            <a>Excluir</a>
+            <Button href={`/clientes/editar/${cliente.id}`}>Editar</Button>
+            <Button danger>Excluir</Button>
           </Space>
         );
       },
@@ -61,16 +63,23 @@ function Clientes() {
 
   return (
     <>
-      <Title>Clientes</Title>
-      <Button
-        style={{ margin: "20px" }}
-        type="primary"
-        size="large"
-        icon={<UserAddOutlined />}
-        onClick={() => router.push("/clientes/cadastrar")}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
-        Cadastrar cliente
-      </Button>
+        <Title>Clientes</Title>
+        <Button
+          type="primary"
+          size="large"
+          icon={<UserAddOutlined />}
+          onClick={() => router.push("/clientes/cadastrar")}
+        >
+          Cadastrar cliente
+        </Button>
+      </div>
+
       <Table columns={colunas} dataSource={clientes} />
     </>
   );
