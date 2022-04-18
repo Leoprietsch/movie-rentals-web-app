@@ -3,43 +3,20 @@ import { ColumnsType } from "antd/lib/table";
 import Title from "antd/lib/typography/Title";
 import React, { useEffect, useState } from "react";
 import Filme from "../entities/Filmes";
+import { getAll } from "../apiClients/filmesClient";
 
 function Filmes() {
   const [filmes, setFilmes] = useState<Filme[]>([]);
 
   useEffect(() => {
-    setFilmes([
-      {
-        id: 1,
-        titulo: "Spider-man",
-        classificacaoIndicativa: 10,
-        lancamento: true,
-      },
-      {
-        id: 2,
-        titulo: "Spider-man 2",
-        classificacaoIndicativa: 12,
-        lancamento: false,
-      },
-      {
-        id: 3,
-        titulo: "Spider-man 3",
-        classificacaoIndicativa: 14,
-        lancamento: true,
-      },
-      {
-        id: 4,
-        titulo: "Spider-man 4",
-        classificacaoIndicativa: 16,
-        lancamento: false,
-      },
-      {
-        id: 5,
-        titulo: "Spider-man 5",
-        classificacaoIndicativa: 18,
-        lancamento: true,
-      },
-    ]);
+    getAll()
+      .then((response: any) => {
+        setFilmes(response.data);
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
   }, []);
 
   const columns: ColumnsType<Filme> = [
