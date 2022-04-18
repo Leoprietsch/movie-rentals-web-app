@@ -16,7 +16,7 @@ namespace MovieRentals.Domain
     {
       Cliente = cliente;
       Filme = filme;
-      DataLocacao = DateTime.UtcNow;
+      DataLocacao = DateTime.Now;
     }
   }
 }

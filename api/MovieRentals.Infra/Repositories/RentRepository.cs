@@ -112,7 +112,7 @@ namespace MovieRentals.Infra.Repositories
       int affectedRows = _db.Execute(@"
         UPDATE locacao set 
           DataDevolucao = @DataDevolucao
-        WHERE id = @Id", new { Id = id, DataDevolucao = DateTime.UtcNow });
+        WHERE id = @Id", new { Id = id, DataDevolucao = DateTime.Now });
 
       return Get(id);
     }
