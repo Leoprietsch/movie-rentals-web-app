@@ -4,30 +4,23 @@ import { Form, Input, Button, DatePicker } from "antd";
 import Cliente from "../../../entities/Cliente";
 import { useRouter } from "next/router";
 import moment, { Moment } from "moment";
+import { get, update } from "../../../apiClients/clientesClient";
 
 function EditarCliente() {
   const [form] = Form.useForm();
   const [cliente, setCliente] = useState<Cliente>();
   const router = useRouter();
-  const { query } = router;
-
-  const createDate = () => {
-    let date = new Date();
-    date.setFullYear(18);
-    date.setMonth(8);
-    date.setFullYear(1997);
-    console.log(date);
-    return date;
-  };
+  const { id } = router.query;
 
   useEffect(() => {
-    setCliente({
-      id: Number(query.id),
-      nome: "Leonardo Oliveira",
-      cpf: "85953547072",
-      dataNascimento: createDate(),
-    });
-  }, [form]);
+    get(id as String)
+      .then((response: any) => {
+        setCliente(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }, [form, router.isReady]);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -37,9 +30,10 @@ function EditarCliente() {
     });
   }, [cliente]);
 
-  const onFinish = (values: any) => {
-    const dataNascimento = values.dataNascimento as Moment;
-    console.log(dataNascimento.toDate());
+  const onFinish = (cliente: Cliente) => {
+    const dataNascimento = cliente.dataNascimento as unknown as Moment;
+    cliente.dataNascimento = dataNascimento.toDate();
+    update(id as String, cliente).then(() => router.push("/clientes"));
   };
 
   return (
@@ -62,7 +56,9 @@ function EditarCliente() {
           <DatePicker format={"DD/MM/yyyy"} />
         </Form.Item>
         <Form.Item>
-          <Button htmlType="submit">Salvar</Button>
+          <Button type="primary" htmlType="submit">
+            Salvar
+          </Button>
         </Form.Item>
       </Form>
     </>

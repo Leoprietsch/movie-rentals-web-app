@@ -2,10 +2,17 @@ import Title from "antd/lib/typography/Title";
 import React from "react";
 import { Form, Input, Button, DatePicker } from "antd";
 import { Moment } from "moment";
+import Cliente from "../../../entities/Cliente";
+import { create } from "../../../apiClients/clientesClient";
+import { useRouter } from "next/router";
 
 function CadastrarCliente() {
-  const onFinish = (values: any) => {
-    const dataNascimento = values.dataNascimento as Moment;
+  const router = useRouter();
+
+  const onFinish = (cliente: Cliente) => {
+    const dataNascimento = cliente.dataNascimento as unknown as Moment;
+    cliente.dataNascimento = dataNascimento.toDate();
+    create(cliente).then(() => router.push("/clientes"));
   };
 
   return (
