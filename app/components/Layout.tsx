@@ -18,23 +18,13 @@ function Layout(props: { child: React.ReactNode }) {
   const [current, setCurrent] = useState("/");
 
   const handleClick = (e: any) => {
-    console.log(e);
     setCurrent(e.key);
     router.push(e.key);
   };
 
   return (
     <AntLayout>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
+      <Sider breakpoint="lg" collapsedWidth="0">
         <Menu
           theme="dark"
           onClick={handleClick}
@@ -56,9 +46,10 @@ function Layout(props: { child: React.ReactNode }) {
         </Menu>
       </Sider>
       <AntLayout>
-        <Content style={{ margin: "24px 16px 0" }}>{child}</Content>
+        <Content style={{ padding: "50px" }}>{child}</Content>
         <Footer style={{ textAlign: "center" }}>
-          Movie Rentals ©2022 Created by Leoprietsch
+          Movie Rentals ©2022 criado por{" "}
+          <a href="https://github.com/Leoprietsch">Leoprietsch</a>
         </Footer>
       </AntLayout>
     </AntLayout>
