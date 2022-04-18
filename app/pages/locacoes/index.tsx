@@ -68,13 +68,13 @@ function Locacoes() {
     },
     {
       title: "Ações",
-      dataIndex: "acoes",
+      dataIndex: "id",
       key: "acoes",
-      render: (value, locacao: Locacao) => {
+      render: (id) => {
         return (
           <Space size="middle">
-            <Button href={`/locacoes/editar/${locacao.id}`}>Devolver</Button>
-            <Button href={`/locacoes/editar/${locacao.id}`}>Editar</Button>
+            <Button href={`/locacoes/editar/${id}`}>Devolver</Button>
+            <Button href={`/locacoes/editar/${id}`}>Editar</Button>
             <Button danger>Excluir</Button>
           </Space>
         );
