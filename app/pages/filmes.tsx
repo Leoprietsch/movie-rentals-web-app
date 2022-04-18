@@ -57,8 +57,8 @@ function Filmes() {
       title: "Lançamento",
       dataIndex: "lancamento",
       key: "lancamento",
-      render: (filme: Filme) => {
-        if (filme.lancamento) return "Sim";
+      render: (lancamento: boolean) => {
+        if (lancamento) return "Sim";
         else return "Não";
       },
     },
