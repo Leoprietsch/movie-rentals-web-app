@@ -1,11 +1,14 @@
-import { Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Title from "antd/lib/typography/Title";
+import { UserAddOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Cliente from "../../entities/Cliente";
+import { useRouter } from "next/router";
 
 function Clientes() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     setClientes([
@@ -59,6 +62,15 @@ function Clientes() {
   return (
     <>
       <Title>Clientes</Title>
+      <Button
+        style={{ margin: "20px" }}
+        type="primary"
+        size="large"
+        icon={<UserAddOutlined />}
+        onClick={() => router.push("/clientes/cadastrar")}
+      >
+        Cadastrar cliente
+      </Button>
       <Table columns={colunas} dataSource={clientes} />
     </>
   );
