@@ -25,6 +25,18 @@ namespace MovieRentals.Api
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddCors(options =>
+            {
+              options.AddPolicy("AllowAll",
+              builder =>
+              {
+                builder.WithOrigins("*")
+                         .AllowAnyHeader()
+                         .AllowAnyMethod()
+                         .SetIsOriginAllowedToAllowWildcardSubdomains();
+              });
+            });
+
       services.AddScoped<IDbConnection>(provider => new MySqlConnection(Configuration.GetConnectionString("MovieRentals")));
 
       services.AddTransient<IClientService, ClientService>();
@@ -37,6 +49,7 @@ namespace MovieRentals.Api
       services.AddTransient<IMovieRepository, MovieRepository>();
 
       services.AddControllers();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie Rentals", Version = "v1" });
@@ -47,6 +60,8 @@ namespace MovieRentals.Api
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+
+      app.UseCors("AllowAll");
 
       app.UseSwagger();
       app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Rentals"));
