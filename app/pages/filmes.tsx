@@ -2,13 +2,7 @@ import { Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Title from "antd/lib/typography/Title";
 import React, { useEffect, useState } from "react";
-
-interface Filme {
-  id: Number;
-  titulo: String;
-  classificacaoIndicativa: Number;
-  lancamento: Boolean;
-}
+import Filme from "../entities/Filmes";
 
 function Filmes() {
   const [filmes, setFilmes] = useState<Filme[]>([]);
