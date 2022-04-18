@@ -3,8 +3,8 @@ import { ColumnsType } from "antd/lib/table";
 import Title from "antd/lib/typography/Title";
 import { VideoCameraAddOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import Filme from "../entities/Filmes";
-import { getAll } from "../apiClients/filmesClient";
+import Filme from "../../entities/Filmes";
+import { getAll } from "../../apiClients/filmesClient";
 
 function Filmes() {
   const [filmes, setFilmes] = useState<Filme[]>([]);
