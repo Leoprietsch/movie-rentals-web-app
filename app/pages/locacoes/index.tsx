@@ -5,7 +5,7 @@ import { UserAddOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Locacao from "../../entities/Locacao";
 import { useRouter } from "next/router";
-import { getAll } from "../../apiClients/locacoesClient";
+import { devolve, exclude, getAll } from "../../apiClients/locacoesClient";
 import Cliente from "../../entities/Cliente";
 import Filme from "../../entities/Filmes";
 
@@ -22,6 +22,25 @@ function Locacoes() {
         console.log(e);
       });
   }, []);
+
+  const handleExclusion = (id: number) => {
+    exclude(id).then(() => {
+      let locacoesList = locacoes.filter((locacao) => locacao.id !== id);
+      setLocacoes(locacoesList);
+    });
+  };
+
+  const handleDevolution = (id: number) => {
+    devolve(id).then(() => {
+      getAll()
+        .then((response: any) => {
+          setLocacoes(response.data);
+        })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    });
+  };
 
   const colunas: ColumnsType<Locacao> = [
     {
@@ -73,9 +92,13 @@ function Locacoes() {
       render: (id) => {
         return (
           <Space size="middle">
-            <Button href={`/locacoes/editar/${id}`}>Devolver</Button>
-            <Button href={`/locacoes/editar/${id}`}>Editar</Button>
-            <Button danger>Excluir</Button>
+            <Button onClick={() => handleDevolution(id)}>Devolver</Button>
+            <Button onClick={() => router.push(`/locacoes/editar/${id}`)}>
+              Editar
+            </Button>
+            <Button danger onClick={() => handleExclusion(id)}>
+              Excluir
+            </Button>
           </Space>
         );
       },
@@ -90,12 +113,12 @@ function Locacoes() {
           justifyContent: "space-between",
         }}
       >
-        <Title>Clientes</Title>
+        <Title>Locações</Title>
         <Button
           type="primary"
           size="large"
           icon={<UserAddOutlined />}
-          onClick={() => router.push("/clientes/cadastrar")}
+          onClick={() => router.push("/locacoes/cadastrar")}
         >
           Cadastrar locação
         </Button>
