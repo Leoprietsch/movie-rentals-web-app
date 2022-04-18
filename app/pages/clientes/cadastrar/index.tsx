@@ -5,9 +5,7 @@ import { Moment } from "moment";
 
 function CadastrarCliente() {
   const onFinish = (values: any) => {
-    console.log(values);
     const dataNascimento = values.dataNascimento as Moment;
-    console.log(dataNascimento.toDate());
   };
 
   return (
@@ -29,7 +27,9 @@ function CadastrarCliente() {
           <DatePicker format={"DD/MM/yyyy"} />
         </Form.Item>
         <Form.Item>
-          <Button htmlType="submit">Salvar</Button>
+          <Button type="primary" htmlType="submit">
+            Salvar
+          </Button>
         </Form.Item>
       </Form>
     </>

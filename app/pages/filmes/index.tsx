@@ -13,7 +13,6 @@ function Filmes() {
     getAll()
       .then((response: any) => {
         setFilmes(response.data);
-        console.log(response.data);
       })
       .catch((e: Error) => {
         console.log(e);

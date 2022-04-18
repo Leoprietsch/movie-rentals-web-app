@@ -15,7 +15,6 @@ function Clientes() {
     getAll()
       .then((response: any) => {
         setClientes(response.data);
-        console.log(response.data);
       })
       .catch((e: Error) => {
         console.log(e);
@@ -38,7 +37,6 @@ function Clientes() {
       dataIndex: "dataNascimento",
       key: "dataNascimento",
       render: (value, cliente: Cliente) => {
-        console.log(value);
         return new Date(cliente?.dataNascimento).toLocaleString("pt-br", {
           day: "2-digit",
           month: "2-digit",
