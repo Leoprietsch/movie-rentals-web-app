@@ -5,7 +5,7 @@ import { UserAddOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Cliente from "../../entities/Cliente";
 import { useRouter } from "next/router";
-import { getAll } from "../../apiClients/clientesClient";
+import { exclude, getAll } from "../../apiClients/clientesClient";
 
 function Clientes() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -20,6 +20,13 @@ function Clientes() {
         console.log(e);
       });
   }, []);
+
+  const handleExclusion = (id: number) => {
+    exclude(id).then(() => {
+      let clientList = clientes.filter((client) => client.id !== id);
+      setClientes(clientList);
+    });
+  };
 
   const colunas: ColumnsType<Cliente> = [
     {
@@ -36,8 +43,8 @@ function Clientes() {
       title: "Data de Nascimento",
       dataIndex: "dataNascimento",
       key: "dataNascimento",
-      render: (value, cliente: Cliente) => {
-        return new Date(cliente?.dataNascimento).toLocaleString("pt-br", {
+      render: (dataNascimento) => {
+        return new Date(dataNascimento).toLocaleString("pt-br", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
@@ -46,13 +53,17 @@ function Clientes() {
     },
     {
       title: "Ações",
-      dataIndex: "acoes",
+      dataIndex: "id",
       key: "acoes",
-      render: (value, cliente: Cliente) => {
+      render: (id) => {
         return (
           <Space size="middle">
-            <Button href={`/clientes/editar/${cliente.id}`}>Editar</Button>
-            <Button danger>Excluir</Button>
+            <Button onClick={() => router.push(`/clientes/editar/${id}`)}>
+              Editar
+            </Button>
+            <Button danger onClick={() => handleExclusion(id)}>
+              Excluir
+            </Button>
           </Space>
         );
       },

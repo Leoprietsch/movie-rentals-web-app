@@ -3,14 +3,18 @@ import http from "../http-common";
 
 export const getAll = () => http.get<Array<Cliente>>("/client");
 
-export const get = (id: String) => http.get<Array<Cliente>>(`/client/${id}`);
+export const get = (id: String | number) =>
+  http.get<Array<Cliente>>(`/client/${id}`);
 
 export const create = (cliente: Cliente) => {
   console.log(cliente);
   return http.post<Array<Cliente>>(`/client`, cliente);
 };
 
-export const update = (id: String, cliente: Cliente) => {
+export const update = (id: String | number, cliente: Cliente) => {
   console.log(cliente);
   return http.put<Array<Cliente>>(`/client/${id}`, cliente);
 };
+
+export const exclude = (id: String | number) =>
+  http.delete<Array<Cliente>>(`/client/${id}`);
