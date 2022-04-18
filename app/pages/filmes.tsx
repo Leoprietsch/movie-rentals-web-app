@@ -40,7 +40,7 @@ function Filmes() {
         lancamento: true,
       },
     ]);
-  }, [filmes]);
+  }, []);
 
   const columns: ColumnsType<Filme> = [
     {
@@ -57,7 +57,7 @@ function Filmes() {
       title: "Lançamento",
       dataIndex: "lancamento",
       key: "lancamento",
-      render: (texto, filme) => {
+      render: (filme: Filme) => {
         if (filme.lancamento) return "Sim";
         else return "Não";
       },
