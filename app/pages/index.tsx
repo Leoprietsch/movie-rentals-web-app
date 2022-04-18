@@ -1,7 +1,11 @@
 import React from "react";
 
 function HomePage() {
-  return <h1>Welcome!</h1>;
+  return (
+    <>
+      <h1>Welcome to Movie Rentals!</h1>
+    </>
+  );
 }
 
 export default HomePage;
