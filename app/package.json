@@ -14,6 +14,7 @@
     "@skynexui/components": "^1.23.8",
     "@supabase/supabase-js": "^1.29.4",
     "antd": "^4.19.5",
+    "axios": "^0.26.1",
     "next": "^12.0.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
@@ -27,8 +28,8 @@
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "eslint": "^8.7.0",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-json": "^3.1.0",
