@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -28,18 +29,18 @@ namespace MovieRentals.Service.Services
           Delimiter = ";"
         }))
         {
-          var records = csvReader.GetRecords<Movie>();
+          var movies = csvReader.GetRecords<Movie>().ToList();
 
-          var duplicates = records.GroupBy(x => x.Id).Where(g => g.Count() > 1);
+          var mvs = new List<Movie>(movies);
+          var hasEmptyIds = mvs.Any(x => x.Id == null);
+          var hasDuplicates = mvs.GroupBy(x => x.Id).Any(x => x.Count() > 1);
 
-          if (duplicates.Any())
-            return null;
+          if (hasDuplicates || hasEmptyIds) return null;
 
-          return records.Select(movie =>
-          {
-            var existingMovie = _movieRepository.Get(movie.Id);
-            return existingMovie ?? _movieRepository.Create(movie);
-          }).ToArray();
+          var hasAnyExistingMovie = movies.Any(m => _movieRepository.Get(m.Id.Value) != null);
+          if (hasAnyExistingMovie) return null;
+
+          return movies.Select(movie => _movieRepository.Create(movie)).ToArray();
         }
       }
     }
