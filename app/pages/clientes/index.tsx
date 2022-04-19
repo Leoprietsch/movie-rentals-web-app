@@ -58,10 +58,13 @@ function Clientes() {
       render: (id) => {
         return (
           <Space size="middle">
-            <Button onClick={() => router.push(`/clientes/editar/${id}`)}>
+            <Button
+              size="small"
+              onClick={() => router.push(`/clientes/editar/${id}`)}
+            >
               Editar
             </Button>
-            <Button danger onClick={() => handleExclusion(id)}>
+            <Button size="small" danger onClick={() => handleExclusion(id)}>
               Excluir
             </Button>
           </Space>
@@ -89,7 +92,11 @@ function Clientes() {
         </Button>
       </div>
 
-      <Table columns={colunas} dataSource={clientes} />
+      <Table
+        pagination={{ defaultPageSize: 8 }}
+        columns={colunas}
+        dataSource={clientes}
+      />
     </>
   );
 }

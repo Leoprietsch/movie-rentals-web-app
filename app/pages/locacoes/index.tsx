@@ -1,4 +1,4 @@
-import { Button, Space, Table } from "antd";
+import { Button, Pagination, Space, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Title from "antd/lib/typography/Title";
 import { UserAddOutlined } from "@ant-design/icons";
@@ -92,11 +92,16 @@ function Locacoes() {
       render: (id) => {
         return (
           <Space size="middle">
-            <Button onClick={() => handleDevolution(id)}>Devolver</Button>
-            <Button onClick={() => router.push(`/locacoes/editar/${id}`)}>
+            <Button size="small" onClick={() => handleDevolution(id)}>
+              Devolver
+            </Button>
+            <Button
+              size="small"
+              onClick={() => router.push(`/locacoes/editar/${id}`)}
+            >
               Editar
             </Button>
-            <Button danger onClick={() => handleExclusion(id)}>
+            <Button size="small" danger onClick={() => handleExclusion(id)}>
               Excluir
             </Button>
           </Space>
@@ -124,7 +129,11 @@ function Locacoes() {
         </Button>
       </div>
 
-      <Table columns={colunas} dataSource={locacoes} />
+      <Table
+        pagination={{ defaultPageSize: 8 }}
+        columns={colunas}
+        dataSource={locacoes}
+      />
     </>
   );
 }
