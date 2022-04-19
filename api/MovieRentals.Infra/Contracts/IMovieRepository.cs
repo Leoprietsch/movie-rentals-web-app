@@ -6,6 +6,6 @@ namespace MovieRentals.Infra.Contracts
   {
     Movie[] GetAll();
     Movie Get(int id);
-    Movie Create(Movie client);
+    Movie Create(Movie movie);
   }
 }

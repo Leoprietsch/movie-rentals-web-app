@@ -13,5 +13,8 @@ namespace MovieRentals.Service.Services
 
     public Movie[] GetAll()
       => _movieRepository.GetAll();
+
+    public Movie Create(Movie movie)
+      => _movieRepository.Create(movie);
   }
 }

@@ -33,7 +33,7 @@ namespace MovieRentals.Infra.Repositories
 
     public Movie Create(Movie movie)
     {
-      _db.QuerySingle<int>(@"
+      _db.Query(@"
         INSERT INTO filme 
           (Id, Titulo, ClassificacaoIndicativa, Lancamento)
           VALUES 
