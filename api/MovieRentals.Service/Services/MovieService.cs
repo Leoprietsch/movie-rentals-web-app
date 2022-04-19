@@ -1,3 +1,8 @@
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using CsvHelper;
+using CsvHelper.Configuration;
 using MovieRentals.Domain;
 using MovieRentals.Infra.Contracts;
 using MovieRentals.Service.Contracts;
@@ -14,7 +19,29 @@ namespace MovieRentals.Service.Services
     public Movie[] GetAll()
       => _movieRepository.GetAll();
 
-    public Movie Create(Movie movie)
-      => _movieRepository.Create(movie);
+    public Movie[] Import(Stream fileStream)
+    {
+      using (var reader = new StreamReader(fileStream))
+      {
+        using (var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.CurrentCulture)
+        {
+          Delimiter = ";"
+        }))
+        {
+          var records = csvReader.GetRecords<Movie>();
+
+          var duplicates = records.GroupBy(x => x.Id).Where(g => g.Count() > 1);
+
+          if (duplicates.Any())
+            return null;
+
+          return records.Select(movie =>
+          {
+            var existingMovie = _movieRepository.Get(movie.Id);
+            return existingMovie ?? _movieRepository.Create(movie);
+          }).ToArray();
+        }
+      }
+    }
   }
 }

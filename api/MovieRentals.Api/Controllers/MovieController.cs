@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MovieRentals.Api.Models.Request;
 using MovieRentals.Domain;
 using MovieRentals.Service.Contracts;
 
@@ -21,7 +20,19 @@ namespace MovieRentals.Api.Controllers
       => Ok(_movieService.GetAll());
 
     [HttpPost]
-    public ActionResult<Rent> Post([FromBody] MovieCommandModel movieCommandModel)
-      => Ok(_movieService.Create(new Movie(movieCommandModel.Id, movieCommandModel.Titulo, movieCommandModel.ClassificacaoIndicativa, movieCommandModel.Lancamento)));
+    public ActionResult<Movie[]> Post([FromForm] IFormFile file)
+    {
+      var formatoPermitido = "text/csv";
+      if (file.ContentType != formatoPermitido)
+        return BadRequest($"Formato de arquivo deve ser {formatoPermitido}, mas foi enviado um {file.ContentType}");
+
+      Stream stream = file.OpenReadStream();
+
+      var importedMovies = _movieService.Import(stream);
+
+      return importedMovies != null
+        ? Ok(importedMovies)
+        : UnprocessableEntity(new { Error = "Mensagem de erro" });
+    }
   }
 }

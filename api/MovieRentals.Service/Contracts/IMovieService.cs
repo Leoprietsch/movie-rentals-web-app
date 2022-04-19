@@ -1,3 +1,4 @@
+using System.IO;
 using MovieRentals.Domain;
 
 namespace MovieRentals.Service.Contracts
@@ -5,6 +6,6 @@ namespace MovieRentals.Service.Contracts
   public interface IMovieService
   {
     Movie[] GetAll();
-    Movie Create(Movie movie);
+    Movie[] Import(Stream fileStream);
   }
 }
