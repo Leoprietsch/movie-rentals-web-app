@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MovieRentals.Domain\MovieRentals.Domain.csproj" />
     <ProjectReference Include="..\MovieRentals.Infra\MovieRentals.Infra.csproj" />
   </ItemGroup>
