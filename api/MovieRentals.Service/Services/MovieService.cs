@@ -31,9 +31,8 @@ namespace MovieRentals.Service.Services
         {
           var movies = csvReader.GetRecords<Movie>().ToList();
 
-          var mvs = new List<Movie>(movies);
-          var hasEmptyIds = mvs.Any(x => x.Id == null);
-          var hasDuplicates = mvs.GroupBy(x => x.Id).Any(x => x.Count() > 1);
+          var hasEmptyIds = movies.Any(x => x.Id == null);
+          var hasDuplicates = movies.GroupBy(x => x.Id).Any(x => x.Count() > 1);
 
           if (hasDuplicates || hasEmptyIds) return null;
 
