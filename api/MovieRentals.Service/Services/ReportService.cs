@@ -23,13 +23,18 @@ namespace MovieRentals.Service.Contracts
         var overdueSheet = file.Workbook.Worksheets.Add("Clientes em atraso");
         overdueSheet.Cells["A1"].LoadFromCollection(_clientService.GetOverdueClients(), true);
         overdueSheet.Column(4).Style.Numberformat.Format = "dd/MM/yyyy";
+        overdueSheet.Columns.AutoFit();
 
         var mostRented = new List<Client>();
         mostRented.Add(_clientService.GetSecondClientWhoMostRented());
-
         var mostRentedSheet = file.Workbook.Worksheets.Add("Segundo cliente que mais alugou");
         mostRentedSheet.Cells["A1"].LoadFromCollection(mostRented, true);
         mostRentedSheet.Column(4).Style.Numberformat.Format = "dd/MM/yyyy";
+        mostRentedSheet.Columns.AutoFit();
+
+        var moviesNeverRentedSheet = file.Workbook.Worksheets.Add("Filmes nunca alugados");
+        moviesNeverRentedSheet.Cells["A1"].LoadFromCollection(_movieRepository.GetMoviesNeverRented(), true);
+        moviesNeverRentedSheet.Columns.AutoFit();
 
         file.Save();
         return file.GetAsByteArray();

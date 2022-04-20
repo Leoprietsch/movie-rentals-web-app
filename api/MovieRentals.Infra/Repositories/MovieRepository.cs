@@ -43,9 +43,12 @@ namespace MovieRentals.Infra.Repositories
     }
 
     Movie[] IMovieRepository.GetMoviesNeverRented()
-    {
-      throw new System.NotImplementedException();
-    }
+      => _db.Query<Movie>(@"
+        SELECT *
+          FROM filme
+          WHERE id NOT IN
+            (SELECT id_filme 
+            FROM locacao);")?.ToArray();
 
     Movie[] IMovieRepository.GetMostRentedMoviesFromLastYear(int range)
     {
