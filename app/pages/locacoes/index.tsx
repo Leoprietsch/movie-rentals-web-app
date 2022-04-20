@@ -89,12 +89,18 @@ function Locacoes() {
       title: "Ações",
       dataIndex: "id",
       key: "acoes",
-      render: (id) => {
-        return (
-          <Space size="middle">
+      render: (id, locacao: Locacao) => {
+        let devolverButton;
+        if (!locacao.dataDevolucao)
+          devolverButton = (
             <Button size="small" onClick={() => handleDevolution(id)}>
               Devolver
             </Button>
+          );
+
+        return (
+          <Space size="middle">
+            {devolverButton}
             <Button
               size="small"
               onClick={() => router.push(`/locacoes/editar/${id}`)}
@@ -129,11 +135,7 @@ function Locacoes() {
         </Button>
       </div>
 
-      <Table
-        pagination={{ defaultPageSize: 8 }}
-        columns={colunas}
-        dataSource={locacoes}
-      />
+      <Table columns={colunas} dataSource={locacoes} />
     </>
   );
 }
