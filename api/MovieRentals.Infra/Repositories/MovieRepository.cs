@@ -41,5 +41,20 @@ namespace MovieRentals.Infra.Repositories
 
       return movie;
     }
+
+    Movie[] IMovieRepository.GetMoviesNeverRented()
+    {
+      throw new System.NotImplementedException();
+    }
+
+    Movie[] IMovieRepository.GetMostRentedMoviesFromLastYear(int range)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    Movie[] IMovieRepository.GetLeastRentedMoviesFromLastWeek(int range)
+    {
+      throw new System.NotImplementedException();
+    }
   }
 }

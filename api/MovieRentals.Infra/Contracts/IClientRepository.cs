@@ -9,5 +9,7 @@ namespace MovieRentals.Infra.Contracts
     Client Create(Client client);
     Client Update(int id, Client client);
     void Delete(int id);
+    Client GetSecondClientWhoMostRented();
+    Client[] GetOverdueClients();
   }
 }

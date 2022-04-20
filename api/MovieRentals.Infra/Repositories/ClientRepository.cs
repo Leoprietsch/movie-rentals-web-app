@@ -64,5 +64,35 @@ namespace MovieRentals.Infra.Repositories
 
     public void Delete(int id)
       => _db.Query(@"DELETE FROM cliente WHERE Id = @Id", new { Id = id });
+
+    public Client GetSecondClientWhoMostRented()
+      => _db.QueryFirstOrDefault<Client>(@"
+          SELECT
+            c.id as Id,
+            c.nome as Nome,
+            c.CPF as CPF,
+            c.dataNascimento as DataNascimento
+          FROM locacao l
+          RIGHT JOIN cliente c ON l.id_cliente = c.id
+          GROUP BY l.id_cliente
+          ORDER BY Count(l.id_cliente) desc
+          LIMIT 1, 1;");
+
+
+    public Client[] GetOverdueClients()
+      => _db.Query<Client>(@"
+        SELECT
+          c.id as Id,
+          c.nome as Nome,
+          c.CPF as CPF,
+          c.dataNascimento as DataNascimento
+        FROM cliente c
+        LEFT JOIN locacao l ON l.id_cliente = c.id
+        LEFT JOIN filme f ON l.id_filme = f.id
+        WHERE 
+          l.dataDevolucao is null AND (
+            (f.lancamento = 0 AND l.dataLocacao < (NOW() - INTERVAL 3 DAY)) OR 
+            (f.lancamento = 1 AND l.dataLocacao < (NOW() - INTERVAL 2 DAY)))
+		    GROUP BY l.id_cliente;")?.ToArray();
   }
 }
