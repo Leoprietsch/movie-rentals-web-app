@@ -92,11 +92,7 @@ function Clientes() {
         </Button>
       </div>
 
-      <Table
-        pagination={{ defaultPageSize: 8 }}
-        columns={colunas}
-        dataSource={clientes}
-      />
+      <Table columns={colunas} dataSource={clientes} />
     </>
   );
 }

@@ -91,11 +91,7 @@ function Filmes() {
           </Upload>
         </Form>
       </div>
-      <Table
-        pagination={{ defaultPageSize: 8 }}
-        columns={columns}
-        dataSource={filmes}
-      />
+      <Table columns={columns} dataSource={filmes} />
     </>
   );
 }
