@@ -1,8 +1,8 @@
 {
-  "name": "matrix-chat-typescript",
+  "name": "movie-rentals",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/Leoprietsch/matrix-chat-typescript.git",
+  "repository": "https://github.com/Leoprietsch/movie-rentals-web-app",
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
