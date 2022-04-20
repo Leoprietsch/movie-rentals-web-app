@@ -1,7 +1,4 @@
-﻿using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MovieRentals.Domain;
+﻿using Microsoft.AspNetCore.Mvc;
 using MovieRentals.Service.Contracts;
 
 namespace MovieRentals.Api.Controllers
@@ -10,29 +7,19 @@ namespace MovieRentals.Api.Controllers
   [Route("[controller]")]
   public class ReportController : ControllerBase
   {
-    private readonly IMovieService _movieService;
+    private readonly IReportService _reportService;
 
-    public ReportController(IMovieService clientService)
-      => _movieService = clientService;
+    public ReportController(IReportService reportService)
+      => _reportService = reportService;
 
     [HttpGet]
-    public ActionResult<Movie[]> GetAll()
-      => Ok(_movieService.GetAll());
-
-    [HttpPost]
-    public ActionResult<Movie[]> Post([FromForm] IFormFile file)
+    public IActionResult GetExcel()
     {
-      var formatoPermitido = "text/csv";
-      if (file.ContentType != formatoPermitido)
-        return BadRequest($"Formato de arquivo deve ser {formatoPermitido}, mas foi enviado um {file.ContentType}");
+      var fileData = _reportService.GenerateReportFile();
+      var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      var fileName = "relatorio.xlsx";
 
-      Stream stream = file.OpenReadStream();
-
-      var importedMovies = _movieService.Import(stream);
-
-      return importedMovies != null
-        ? Ok(importedMovies)
-        : UnprocessableEntity(new { Error = "Mensagem de erro" });
+      return File(fileData, contentType, fileName);
     }
   }
 }
