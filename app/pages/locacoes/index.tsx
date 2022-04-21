@@ -1,13 +1,14 @@
-import { Button, Pagination, Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Title from "antd/lib/typography/Title";
-import { UserAddOutlined } from "@ant-design/icons";
+import { UserAddOutlined, FileExcelOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Locacao from "../../entities/Locacao";
 import { useRouter } from "next/router";
 import { devolve, exclude, getAll } from "../../apiClients/locacoesClient";
 import Cliente from "../../entities/Cliente";
 import Filme from "../../entities/Filmes";
+import { exportReport } from "../../apiClients/relatorioClient";
 
 function Locacoes() {
   const [locacoes, setLocacoes] = useState<Locacao[]>([]);
@@ -126,6 +127,22 @@ function Locacoes() {
       >
         <Title>Locações</Title>
         <Button
+          size="large"
+          icon={<FileExcelOutlined />}
+          onClick={() =>
+            exportReport().then((response) => {
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const link = document.createElement("a");
+              link.href = url;
+              link.setAttribute("download", "report.xlsx");
+              document.body.appendChild(link);
+              link.click();
+            })
+          }
+        >
+          Exportar relatório
+        </Button>
+        <Button
           type="primary"
           size="large"
           icon={<UserAddOutlined />}
@@ -134,7 +151,6 @@ function Locacoes() {
           Cadastrar locação
         </Button>
       </div>
-
       <Table columns={colunas} dataSource={locacoes} />
     </>
   );

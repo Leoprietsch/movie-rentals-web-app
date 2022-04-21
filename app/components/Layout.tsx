@@ -1,6 +1,5 @@
 import { Layout as AntLayout, Menu } from "antd";
 import {
-  HomeOutlined,
   UserOutlined,
   VideoCameraOutlined,
   InteractionOutlined,
@@ -8,7 +7,7 @@ import {
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-const { Header, Content, Footer, Sider } = AntLayout;
+const { Content, Footer, Sider } = AntLayout;
 
 function Layout(props: { child: React.ReactNode }) {
   const { child } = props;
@@ -31,9 +30,6 @@ function Layout(props: { child: React.ReactNode }) {
           mode="inline"
           defaultSelectedKeys={[current]}
         >
-          <Menu.Item key="/" icon={<HomeOutlined />}>
-            Página Inicial
-          </Menu.Item>
           <Menu.Item key="/filmes" icon={<VideoCameraOutlined />}>
             Filmes
           </Menu.Item>
