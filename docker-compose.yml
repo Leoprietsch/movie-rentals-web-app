@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - ./api/sql/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql:ro
+
+volumes:
+  db:
+    driver: local
