@@ -42,7 +42,7 @@ namespace MovieRentals.Infra.Repositories
       return movie;
     }
 
-    Movie[] IMovieRepository.GetMoviesNeverRented()
+    public Movie[] GetMoviesNeverRented()
       => _db.Query<Movie>(@"
         SELECT *
           FROM filme
@@ -50,14 +50,28 @@ namespace MovieRentals.Infra.Repositories
             (SELECT id_filme 
             FROM locacao);")?.ToArray();
 
-    Movie[] IMovieRepository.GetMostRentedMoviesFromLastYear(int range)
-    {
-      throw new System.NotImplementedException();
-    }
+    public Movie[] GetFiveMostRentedMoviesFromLastYear()
+    => _db.Query<Movie>(@"
+        SELECT
+          f.Id,
+          f.Titulo,
+          f.ClassificacaoIndicativa,
+          f.Lancamento,
+          (SELECT Count(*) FROM locacao l WHERE l.id_filme = f.id AND l.dataLocacao > (NOW() - INTERVAL 1 YEAR)) as VezesAlugado
+        FROM filme f
+        ORDER BY VezesAlugado desc
+        LIMIT 5;")?.ToArray();
 
-    Movie[] IMovieRepository.GetLeastRentedMoviesFromLastWeek(int range)
-    {
-      throw new System.NotImplementedException();
-    }
+    public Movie[] GetThreeLeastRentedMoviesFromLastWeek()
+      => _db.Query<Movie>(@"
+        SELECT
+          f.Id,
+          f.Titulo,
+          f.ClassificacaoIndicativa,
+          f.Lancamento,
+          (SELECT Count(*) FROM locacao l WHERE l.id_filme = f.id AND l.dataLocacao > (NOW() - INTERVAL 1 WEEK)) as VezesAlugado
+        FROM filme f
+        ORDER BY VezesAlugado
+        LIMIT 3;")?.ToArray();
   }
 }
